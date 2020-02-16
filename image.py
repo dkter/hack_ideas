@@ -3,10 +3,9 @@ from typing import List
 import requests
 import random
 import re
-
+from base64 import b64encode
 from PIL import Image, ImageFont, ImageDraw
-
-from .secrets import flaticon_key
+from secrets import flaticon_key
 
 
 fonts = [
@@ -48,7 +47,7 @@ def get_png(words: List[str]) -> str:
 
 
 def split_word(word: str) -> List[str]:
-    return re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', name)).split()
+    return re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', word)).split()
 
 
 def gen_logo(name: str) -> Image:
@@ -90,5 +89,11 @@ def gen_logo(name: str) -> Image:
     draw.text(text_pos, disp_name, font=font, fill=(0, 0, 0, 0))
     image.paste(icon, icon_pos, icon.convert("RGBA"))
 
+    byteimage = BytesIO()
+    image.save(byteimage, format="PNG")
+    encoded = b64encode(byteimage.getvalue())
+    mime = "image/png"
+    uri = "data:%s;base64,%s" % (mime, encoded.decode())
 
-    return image
+    return uri
+gen_logo("Jellyfish")
