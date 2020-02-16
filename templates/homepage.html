@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Find an idea</title>
     <style>
         .loading_overlay{
             position: fixed; /* Sit on top of the page content */
@@ -12,97 +12,114 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255,255,255,0.5); /* Black background with opacity */
+            background-color: rgba(200,200,200,0.5); /* Black background with opacity */
+            backdrop-filter: blur(5px);
             z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
         }
 
         .sk-folding-cube {
-          margin: 250px auto;
-          width: 40px;
-          height: 40px;
-          position: relative;
-            z-index: 3;
-          -webkit-transform: rotateZ(45deg);
-                  transform: rotateZ(45deg);
+            margin: 250px auto;
+            width: 40px;
+            height: 40px;
+            position: relative;
+              z-index: 3;
+            -webkit-transform: rotateZ(45deg);
+                    transform: rotateZ(45deg);
         }
 
         .sk-folding-cube .sk-cube {
-          float: left;
-          width: 50%;
-          height: 50%;
-          position: relative;
-          -webkit-transform: scale(1.1);
-              -ms-transform: scale(1.1);
-                  transform: scale(1.1);
+            float: left;
+            width: 50%;
+            height: 50%;
+            position: relative;
+            -webkit-transform: scale(1.1);
+                -ms-transform: scale(1.1);
+                    transform: scale(1.1);
         }
         .sk-folding-cube .sk-cube:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: #333;
-          -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
-                  animation: sk-foldCubeAngle 2.4s infinite linear both;
-          -webkit-transform-origin: 100% 100%;
-              -ms-transform-origin: 100% 100%;
-                  transform-origin: 100% 100%;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+                    animation: sk-foldCubeAngle 2.4s infinite linear both;
+            -webkit-transform-origin: 100% 100%;
+                -ms-transform-origin: 100% 100%;
+                    transform-origin: 100% 100%;
         }
         .sk-folding-cube .sk-cube2 {
-          -webkit-transform: scale(1.1) rotateZ(90deg);
-                  transform: scale(1.1) rotateZ(90deg);
+            -webkit-transform: scale(1.1) rotateZ(90deg);
+                    transform: scale(1.1) rotateZ(90deg);
         }
         .sk-folding-cube .sk-cube3 {
-          -webkit-transform: scale(1.1) rotateZ(180deg);
-                  transform: scale(1.1) rotateZ(180deg);
+            -webkit-transform: scale(1.1) rotateZ(180deg);
+                    transform: scale(1.1) rotateZ(180deg);
         }
         .sk-folding-cube .sk-cube4 {
-          -webkit-transform: scale(1.1) rotateZ(270deg);
-                  transform: scale(1.1) rotateZ(270deg);
+            -webkit-transform: scale(1.1) rotateZ(270deg);
+                    transform: scale(1.1) rotateZ(270deg);
         }
         .sk-folding-cube .sk-cube2:before {
-          -webkit-animation-delay: 0.3s;
-                  animation-delay: 0.3s;
+            -webkit-animation-delay: 0.3s;
+                    animation-delay: 0.3s;
         }
         .sk-folding-cube .sk-cube3:before {
-          -webkit-animation-delay: 0.6s;
-                  animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+                    animation-delay: 0.6s;
         }
         .sk-folding-cube .sk-cube4:before {
-          -webkit-animation-delay: 0.9s;
-                  animation-delay: 0.9s;
+            -webkit-animation-delay: 0.9s;
+                    animation-delay: 0.9s;
         }
         @-webkit-keyframes sk-foldCubeAngle {
-          0%, 10% {
-            -webkit-transform: perspective(140px) rotateX(-180deg);
-                    transform: perspective(140px) rotateX(-180deg);
-            opacity: 0;
-          } 25%, 75% {
-            -webkit-transform: perspective(140px) rotateX(0deg);
-                    transform: perspective(140px) rotateX(0deg);
-            opacity: 1;
-          } 90%, 100% {
-            -webkit-transform: perspective(140px) rotateY(180deg);
-                    transform: perspective(140px) rotateY(180deg);
-            opacity: 0;
-          }
+            0%, 10% {
+                -webkit-transform: perspective(140px) rotateX(-180deg);
+                        transform: perspective(140px) rotateX(-180deg);
+                opacity: 0;
+            } 25%, 75% {
+                -webkit-transform: perspective(140px) rotateX(0deg);
+                        transform: perspective(140px) rotateX(0deg);
+                opacity: 1;
+            } 90%, 100% {
+                -webkit-transform: perspective(140px) rotateY(180deg);
+                        transform: perspective(140px) rotateY(180deg);
+                opacity: 0;
+            }
         }
 
         @keyframes sk-foldCubeAngle {
-          0%, 10% {
-            -webkit-transform: perspective(140px) rotateX(-180deg);
-                    transform: perspective(140px) rotateX(-180deg);
-            opacity: 0;
-          } 25%, 75% {
-            -webkit-transform: perspective(140px) rotateX(0deg);
-                    transform: perspective(140px) rotateX(0deg);
-            opacity: 1;
-          } 90%, 100% {
-            -webkit-transform: perspective(140px) rotateY(180deg);
-                    transform: perspective(140px) rotateY(180deg);
-            opacity: 0;
-          }
+            0%, 10% {
+                -webkit-transform: perspective(140px) rotateX(-180deg);
+                        transform: perspective(140px) rotateX(-180deg);
+              opacity: 0;
+            } 25%, 75% {
+                -webkit-transform: perspective(140px) rotateX(0deg);
+                        transform: perspective(140px) rotateX(0deg);
+              opacity: 1;
+            } 90%, 100% {
+                -webkit-transform: perspective(140px) rotateY(180deg);
+                        transform: perspective(140px) rotateY(180deg);
+                opacity: 0;
+            }
+        }
+
+        #border_div {
+            border-radius: 5px;
+            border: 1px solid transparent;
+            box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #loading_text {
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-top: -150px;
         }
     </style>
 </head>
@@ -112,17 +129,16 @@
     <div id="content" class="col-12">
         <div class="offset-md-4 col-md-4" style="margin-top: 100px;">
             <div class="col-sm-12" style="text-align: center;margin-bottom: 50px">
-                <img src="https://cdn.pixabay.com/photo/2017/11/15/21/01/anatomy-2952567_960_720.png" style="width: 125px;height: auto"/>
+                <img id="logo" src="https://cdn.pixabay.com/photo/2017/11/15/21/01/anatomy-2952567_960_720.png" style="width: auto;height: 125px;"/>
             </div>
-            <div id="border_div" style="border: 1px solid black;display: none">
+            <div id="border_div">
                 <div class="col-sm-12 row">
-                    <div id="idea_logo_div" class="col-sm-6" style="width: 75px;height: auto"></div>
-                    <div id="title_div" class="col-sm-6" style="text-align: center; font-size: 28px"></div>
+                    <div id="title_div" class="col-sm-12" style="text-align: center; font-size: 28px"></div>
                 </div>
                 <div id="description_div" class="col-sm-12" style="text-align: center; font-size: 20px"></div>
             </div>
             <div id="default_text_div" class="col-sm-12" style="text-align: center;font-size: 22px">
-            Confused !!! click the button below to generate development ideas
+            Click the button below to generate an awesome project idea.
             </div>
             <div class="col-sm-12" style="text-align: center; margin-top: 25px">
                 <button id="generate_button" class="btn btn-success">Generate Idea</button>
@@ -136,6 +152,7 @@
           <div class="sk-cube4 sk-cube"></div>
           <div class="sk-cube3 sk-cube"></div>
         </div>
+        <h5 id="loading_text">This might take a few moments.</h5>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
@@ -143,9 +160,11 @@
             $('#generate_button').bind('click', function() {
                 $("#loading").css("display", "block");
                 $.getJSON('/ajax/generate_idea', function(data) {
-                    document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
+                    //document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
+                    document.getElementById("logo").src = data.uri;
                     document.getElementById("title_div").innerHTML = data.title;
                     document.getElementById("description_div").innerHTML = data.description;
+                    $("#title_div").css("font-weight", "bold");
                     $("#border_div").css("display", "block");
                     $("#default_text_div").css("display", "none");
                     $("#loading").css("display", "none");
