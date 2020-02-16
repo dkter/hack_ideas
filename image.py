@@ -1,10 +1,13 @@
+from base64 import b64encode
 from io import BytesIO
-from typing import List
+from typing import List, Tuple
 import requests
 import random
 import re
-from base64 import b64encode
+
 from PIL import Image, ImageFont, ImageDraw
+import numpy as np
+
 from secrets import flaticon_key
 
 fonts = [
@@ -15,6 +18,15 @@ fonts = [
     "fonts/bebasneue.ttf",
     "fonts/prototype.ttf",
     "fonts/airstrike.ttf"
+]
+colours = [
+    (0, 0, 0),
+    (155, 89, 182),
+    (46, 204, 113),
+    (230, 126, 34),
+    (231, 76, 60),
+    (26, 188, 156),
+    (44, 62, 80)
 ]
 ICON_SIZE = 128
 GENERIC_IMG = f"https://image.flaticon.com/icons/png/{ICON_SIZE}/263/263146.png"
@@ -50,6 +62,27 @@ def split_word(word: str) -> List[str]:
     return re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', word)).split()
 
 
+def is_greyscale(image: Image) -> bool:
+    width, height = image.size
+    for x in range(width):
+        for y in range(height):
+            r, g, b, a = image.getpixel((x, y))
+            if r != g != b:
+                return False
+    return True
+
+
+def swap_colour(image: Image) -> tuple:
+    data = np.array(image)
+    red, green, blue, alpha = data.T
+
+    black_areas = (red <= 10) & (green <= 10) & (blue <= 10)
+    new_colour = random.choice(colours)
+    data[..., :-1][black_areas.T] = new_colour
+
+    return Image.fromarray(data), new_colour
+
+
 def gen_logo(name: str) -> Image:
     if len(name) > 20:
         disp_name = ''.join([word[0] for word in name.split()])
@@ -61,7 +94,11 @@ def gen_logo(name: str) -> Image:
 
     pngurl = get_png(words)
     png = requests.get(pngurl)
-    icon = Image.open(BytesIO(png.content))
+    icon = Image.open(BytesIO(png.content)).convert("RGBA")
+
+    colour = (0, 0, 0)
+    if is_greyscale(icon):
+        icon, colour = swap_colour(icon)
 
     font = ImageFont.truetype(random.choice(fonts), 36)
     text_width, text_height = font.getsize(disp_name)
@@ -86,8 +123,9 @@ def gen_logo(name: str) -> Image:
     draw = ImageDraw.Draw(image)
     draw.rectangle((0, 0, image_dimensions[0], image_dimensions[1]),
                     fill=(255, 255, 255, 255))
-    draw.text(text_pos, disp_name, font=font, fill=(0, 0, 0, 255))
+    draw.text(text_pos, disp_name, font=font, fill=colour + (255,))
     image.paste(icon, icon_pos, icon.convert("RGBA"))
+
 
     byteimage = BytesIO()
     image.save(byteimage, format="PNG")
