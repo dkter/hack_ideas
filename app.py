@@ -20,7 +20,6 @@ env = Environment(loader=FileSystemLoader('templates/'))
 gpt_2_api_url = 'https://gpt-5vmrd7cmdq-uc.a.run.app'
 
 
-
 def get_idea_from_api(retry=False):
     try:
         req = requests.post(gpt_2_api_url,
@@ -59,8 +58,6 @@ def hello_world():
 @app.route('/ajax/generate_idea')
 def generate_idea():
     title_text, description_text = get_idea_from_api(False)
-    print(title_text, description_text)
-
     uri = gen_logo(title_text)
     data = {
         "title": title_text,

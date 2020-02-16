@@ -7,7 +7,6 @@ from base64 import b64encode
 from PIL import Image, ImageFont, ImageDraw
 from secrets import flaticon_key
 
-
 fonts = [
     "fonts/razed.ttf",
     "fonts/marons.ttf",
@@ -33,7 +32,8 @@ def get_png(words: List[str]) -> str:
     done = False
     word_index = 0
     while not done:
-        searchq = requests.get(f"https://api.flaticon.com/v2/search/icons/priority?q={words[word_index]}", headers=headers)
+        searchq = requests.get(f"https://api.flaticon.com/v2/search/icons/priority?q={words[word_index]}",
+                               headers=headers)
         try:
             pngurl = searchq.json()["data"][0]["images"]["png"][str(ICON_SIZE)]
         except IndexError:
@@ -58,7 +58,7 @@ def gen_logo(name: str) -> Image:
 
     # split the name into words, taking into account camelCase
     words = split_word(name)
-    
+
     pngurl = get_png(words)
     png = requests.get(pngurl)
     icon = Image.open(BytesIO(png.content))
@@ -79,7 +79,7 @@ def gen_logo(name: str) -> Image:
         image_dimensions = (ICON_SIZE + 20 + text_width,
                             ICON_SIZE)
         text_pos = (ICON_SIZE + 10,
-                    ICON_SIZE // 2-18)
+                    ICON_SIZE // 2 - 18)
         icon_pos = (0, 0)
 
     image = Image.new("RGBA", image_dimensions)
