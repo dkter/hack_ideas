@@ -85,8 +85,8 @@ def gen_logo(name: str) -> Image:
     image = Image.new("RGBA", image_dimensions)
     draw = ImageDraw.Draw(image)
     draw.rectangle((0, 0, image_dimensions[0], image_dimensions[1]),
-                    fill=(255, 255, 255, 0))
-    draw.text(text_pos, disp_name, font=font, fill=(0, 0, 0, 0))
+                    fill=(255, 255, 255, 255))
+    draw.text(text_pos, disp_name, font=font, fill=(0, 0, 0, 255))
     image.paste(icon, icon_pos, icon.convert("RGBA"))
 
     byteimage = BytesIO()
@@ -96,4 +96,3 @@ def gen_logo(name: str) -> Image:
     uri = "data:%s;base64,%s" % (mime, encoded.decode())
 
     return uri
-gen_logo("Jellyfish")

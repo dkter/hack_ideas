@@ -3,27 +3,44 @@ from jinja2 import Environment, FileSystemLoader
 import requests
 from image import gen_logo
 
+titles = set()
+descriptions = set()
+with open("projects.txt", encoding="utf-8", errors="ignore") as f:
+    for project in f.read().split("\n\n"):
+        title, desc = project.split("\n")
+        titles.add(title)
+        descriptions.add(desc)
+
+
 app = Flask(__name__)
 env = Environment(loader=FileSystemLoader('templates/'))
 gpt_2_api_url = 'https://gpt-5vmrd7cmdq-uc.a.run.app'
 
 
+
 def get_idea_from_api(retry=False):
     req = requests.post(gpt_2_api_url,
                         json={
-                            'length': 100,
+                            'length': 200,
                             'temperature': 1.0,
-                            'truncate': "\n\n"
+                            #'truncate': "\n\n"
                         })
     api_text = req.json()['text']
-    if "\n" in api_text:
-        api_text = api_text.split("\n", 1)
-    else:
-        if not retry:
-            get_idea_from_api(True)
 
-    print(type(api_text))
-    return api_text
+    # filter out projects without a title
+    generated = [tuple(i.split("\n"))
+                 for i in api_text.split("\n\n")
+                 if len(i.split("\n")) >= 2]
+
+    for title, desc in generated:
+        if title not in titles and desc not in descriptions:
+            return title, desc
+    else:
+        for title, desc in descriptions:
+            if desc not in descriptions:
+                return title, desc
+        else:
+            return generated[0]
 
 
 @app.route('/')
@@ -34,13 +51,8 @@ def hello_world():
 
 @app.route('/ajax/generate_idea')
 def generate_idea():
-    text = get_idea_from_api(False)
-    if text[1] != "":
-        title_text = text[0]
-        description_text = text[1]
-    else:
-        title_text = text
-        description_text = ""
+    title_text, description_text = get_idea_from_api(False)
+    print(title_text, description_text)
 
     uri = gen_logo(title_text)
     data = {
