@@ -73,14 +73,24 @@ def is_greyscale(image: Image) -> bool:
 
 
 def swap_colour(image: Image) -> tuple:
+    new_colour = random.choice(colours)
+
     data = np.array(image)
     red, green, blue, alpha = data.T
 
-    black_areas = (red <= 10) & (green <= 10) & (blue <= 10)
-    new_colour = random.choice(colours)
-    data[..., :-1][black_areas.T] = new_colour
+    if random.random() < 0.4:
+        background = False
+        black_areas = (red <= 10) & (green <= 10) & (blue <= 10)
+        data[..., :-1][black_areas.T] = new_colour
+    else:
+        # coloured background, white text+icon
+        background = True
+        white_areas = (red >= 245) & (green >= 245) & (blue >= 245)
+        data[..., :-1][white_areas.T] = new_colour
+        black_areas = (red <= 10) & (green <= 10) & (blue <= 10)
+        data[..., :-1][black_areas.T] = (255, 255, 255)
 
-    return Image.fromarray(data), new_colour
+    return Image.fromarray(data), new_colour, background
 
 
 def gen_logo(name: str) -> Image:
@@ -97,8 +107,9 @@ def gen_logo(name: str) -> Image:
     icon = Image.open(BytesIO(png.content)).convert("RGBA")
 
     colour = (0, 0, 0)
+    background = False
     if is_greyscale(icon):
-        icon, colour = swap_colour(icon)
+        icon, colour, background = swap_colour(icon)
 
     font = ImageFont.truetype(random.choice(fonts), 36)
     text_width, text_height = font.getsize(disp_name)
@@ -121,10 +132,16 @@ def gen_logo(name: str) -> Image:
 
     image = Image.new("RGBA", image_dimensions)
     draw = ImageDraw.Draw(image)
+    if background:
+        text_fill = (255, 255, 255, 255)
+        back_fill = colour + (255,)
+    else:
+        text_fill = colour + (255,)
+        back_fill = (255, 255, 255, 255)
     draw.rectangle((0, 0, image_dimensions[0], image_dimensions[1]),
-                    fill=(255, 255, 255, 255))
-    draw.text(text_pos, disp_name, font=font, fill=colour + (255,))
-    image.paste(icon, icon_pos, icon.convert("RGBA"))
+                    fill=back_fill)
+    draw.text(text_pos, disp_name, font=font, fill=text_fill)
+    image.paste(icon, icon_pos, icon)
 
 
     byteimage = BytesIO()
