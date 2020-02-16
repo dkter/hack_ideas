@@ -112,12 +112,11 @@
     <div id="content" class="col-12">
         <div class="offset-md-4 col-md-4" style="margin-top: 100px;">
             <div class="col-sm-12" style="text-align: center;margin-bottom: 50px">
-                <img src="https://cdn.pixabay.com/photo/2017/11/15/21/01/anatomy-2952567_960_720.png" style="width: 125px;height: auto"/>
+                <img id="logo" src="https://cdn.pixabay.com/photo/2017/11/15/21/01/anatomy-2952567_960_720.png" style="width: auto;height: 125px;"/>
             </div>
             <div id="border_div" style="border: 1px solid black;display: none">
                 <div class="col-sm-12 row">
-                    <div id="idea_logo_div" class="col-sm-6" style="width: 75px;height: auto"></div>
-                    <div id="title_div" class="col-sm-6" style="text-align: center; font-size: 28px"></div>
+                    <div id="title_div" class="col-sm-12" style="text-align: center; font-size: 28px"></div>
                 </div>
                 <div id="description_div" class="col-sm-12" style="text-align: center; font-size: 20px"></div>
             </div>
@@ -143,9 +142,11 @@
             $('#generate_button').bind('click', function() {
                 $("#loading").css("display", "block");
                 $.getJSON('/ajax/generate_idea', function(data) {
-                    document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
+                    //document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
+                    document.getElementById("logo").src = data.uri;
                     document.getElementById("title_div").innerHTML = data.title;
                     document.getElementById("description_div").innerHTML = data.description;
+                    $("#title_div").css("font-weight", "bold");
                     $("#border_div").css("display", "block");
                     $("#default_text_div").css("display", "none");
                     $("#loading").css("display", "none");
