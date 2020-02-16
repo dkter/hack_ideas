@@ -7,9 +7,12 @@ titles = set()
 descriptions = set()
 with open("projects.txt", encoding="utf-8", errors="ignore") as f:
     for project in f.read().split("\n\n"):
-        title, desc = project.split("\n")
-        titles.add(title)
-        descriptions.add(desc)
+        try:
+            title, desc = project.split("\n")
+            titles.add(title)
+            descriptions.add(desc)
+        except ValueError:
+            print(project)
 
 
 app = Flask(__name__)
