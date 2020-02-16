@@ -8,7 +8,7 @@ env = Environment(loader=FileSystemLoader('templates/'))
 gpt_2_api_url = 'https://gpt-5vmrd7cmdq-uc.a.run.app'
 
 
-def get_idea_from_api(retry=False):
+def get_idea_from_api():
     req = requests.post(gpt_2_api_url,
                         json={
                             'length': 100,
@@ -16,13 +16,6 @@ def get_idea_from_api(retry=False):
                             'truncate': "\n\n"
                         })
     api_text = req.json()['text']
-    if "\n" in api_text:
-        api_text = api_text.split("\n", 1)
-    else:
-        if not retry:
-            get_idea_from_api(True)
-
-    print(type(api_text))
     return api_text
 
 
@@ -34,8 +27,8 @@ def hello_world():
 
 @app.route('/ajax/generate_idea')
 def generate_idea():
-    text = get_idea_from_api(False)
-    if text[1] != "":
+    text = get_idea_from_api()
+    if type(text) == list:
         title_text = text[0]
         description_text = text[1]
     else:
