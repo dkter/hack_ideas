@@ -1,6 +1,8 @@
+import requests
+import json
+
 from flask import Flask, jsonify
 from jinja2 import Environment, FileSystemLoader
-import requests
 from image import gen_logo
 
 titles = set()
@@ -25,12 +27,12 @@ def get_idea_from_api(retry=False):
         req = requests.post(gpt_2_api_url,
                             json={
                                 'length': 200,
-                                'temperature': 1.0,
+                                'temperature': 0.9,
                                 #'truncate': "\n\n"
                             })
         api_text = req.json()['text']
     except json.decoder.JSONDecodeError:
-        print(req.text)
+        print(req.content)
         raise
 
     # filter out projects without a title
@@ -42,7 +44,7 @@ def get_idea_from_api(retry=False):
         if title not in titles and desc not in descriptions:
             return title, desc
     else:
-        for title, desc in descriptions:
+        for title, desc in generated:
             if desc not in descriptions:
                 return title, desc
         else:
