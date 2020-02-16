@@ -97,7 +97,7 @@ def swap_colour(image: Image) -> tuple:
 
 def gen_logo(name: str) -> Image:
     if len(name) > 20:
-        disp_name = ''.join([word[0] for word in name.split()])
+        disp_name = ''.join([word[0] for word in name.split()]).upper()
     else:
         disp_name = name
 
