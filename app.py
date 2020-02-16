@@ -26,7 +26,7 @@ def get_idea_from_api(retry=False):
     try:
         req = requests.post(gpt_2_api_url,
                             json={
-                                'length': 200,
+                                'length': 100,
                                 'temperature': 0.9,
                                 #'truncate': "\n\n"
                             })
