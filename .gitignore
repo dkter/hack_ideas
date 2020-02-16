@@ -1,0 +1,3 @@
+secrets.py
+.mypy_cache/*
+*.pyc
