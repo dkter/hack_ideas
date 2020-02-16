@@ -57,6 +57,12 @@ def hello_world():
     return template.render()
 
 
+@app.route('/about')
+def about():
+    template = env.get_template('about.html')
+    return template.render()
+
+
 @app.route('/ajax/generate_idea')
 def generate_idea():
     title_text, description_text = get_idea_from_api(False)

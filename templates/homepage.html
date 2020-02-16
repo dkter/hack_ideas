@@ -143,6 +143,21 @@
             padding: 5px;
             color: #e74c3c;
         }
+
+        footer {
+            margin-top: 30px;
+            width: 100%;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer a {
+            color: #aaa;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -166,6 +181,9 @@
             <div id="error">
                 An unexpected error occurred. Please try again.
             </div>
+            <footer>
+                <a href="/about">About</a>
+            </footer>
         </div>
     </div>
     <div id="loading" class="loading_overlay" style="display: none">
