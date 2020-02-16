@@ -1,0 +1,1 @@
+flaticon_key = '91230bb0d1f865915080e5f5639bf8caa3ce9d42'
