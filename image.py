@@ -29,6 +29,8 @@ colours = [
     (44, 62, 80)
 ]
 ICON_SIZE = 128
+ICON_SPACING = 20
+LOGO_PADDING = 5
 GENERIC_IMG = f"https://image.flaticon.com/icons/png/{ICON_SIZE}/263/263146.png"
 
 
@@ -116,19 +118,19 @@ def gen_logo(name: str) -> Image:
 
     if random.random() < 0.4:
         # layout for the icon above the text
-        image_dimensions = (max(ICON_SIZE, text_width),
-                            ICON_SIZE + 20 + text_height)
-        text_pos = (max(0, image_dimensions[0] // 2 - text_width // 2),
-                    138)
-        icon_pos = (max(0, image_dimensions[0] // 2 - ICON_SIZE // 2),
-                    0)
+        image_dimensions = (max(ICON_SIZE, text_width) + LOGO_PADDING * 2,
+                            ICON_SIZE + ICON_SPACING + text_height + LOGO_PADDING * 2)
+        text_pos = (max(LOGO_PADDING, image_dimensions[0] // 2 - text_width // 2),
+                    LOGO_PADDING + ICON_SIZE + ICON_SPACING)
+        icon_pos = (max(LOGO_PADDING, image_dimensions[0] // 2 - ICON_SIZE // 2),
+                    LOGO_PADDING)
     else:
         # layout for the icon to the left of the text
-        image_dimensions = (ICON_SIZE + 20 + text_width,
-                            ICON_SIZE)
-        text_pos = (ICON_SIZE + 10,
-                    ICON_SIZE // 2 - 18)
-        icon_pos = (0, 0)
+        image_dimensions = (ICON_SIZE + 20 + text_width + LOGO_PADDING * 2,
+                            ICON_SIZE + LOGO_PADDING * 2)
+        text_pos = (LOGO_PADDING + ICON_SIZE + 10,
+                    LOGO_PADDING + ICON_SIZE // 2 - 18)
+        icon_pos = (LOGO_PADDING, LOGO_PADDING)
 
     image = Image.new("RGBA", image_dimensions)
     draw = ImageDraw.Draw(image)
