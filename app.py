@@ -22,13 +22,17 @@ gpt_2_api_url = 'https://gpt-5vmrd7cmdq-uc.a.run.app'
 
 
 def get_idea_from_api(retry=False):
-    req = requests.post(gpt_2_api_url,
-                        json={
-                            'length': 200,
-                            'temperature': 1.0,
-                            #'truncate': "\n\n"
-                        })
-    api_text = req.json()['text']
+    try:
+        req = requests.post(gpt_2_api_url,
+                            json={
+                                'length': 200,
+                                'temperature': 1.0,
+                                #'truncate': "\n\n"
+                            })
+        api_text = req.json()['text']
+    except json.decoder.JSONDecodeError:
+        print(req.text)
+        raise
 
     # filter out projects without a title
     generated = [tuple(i.split("\n"))

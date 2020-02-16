@@ -134,6 +134,15 @@
             font-size: 20px;
             width: 100%;
         }
+
+        #error {
+            display: none;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            padding: 5px;
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -154,6 +163,9 @@
             <div style="width: 100%; text-align: center; margin-top: 25px">
                 <button id="generate_button" class="btn btn-success">Generate Idea</button>
             </div>
+            <div id="error">
+                An unexpected error occurred. Please try again.
+            </div>
         </div>
     </div>
     <div id="loading" class="loading_overlay" style="display: none">
@@ -170,17 +182,23 @@
         $(function() {
             $('#generate_button').bind('click', function() {
                 $("#loading").css("display", "block");
-                $.getJSON('/ajax/generate_idea', function(data) {
-                    //document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
-                    document.getElementById("logo").src = data.uri;
-                    document.getElementById("title_div").innerHTML = data.title;
-                    document.getElementById("description_div").innerHTML = data.description;
-                    $("#title_div").css("font-weight", "bold");
-                    $("#border_div").css("display", "block");
-                    $("#default_text_div").css("display", "none");
+                request = $.getJSON('/ajax/generate_idea', function(data) {
+                        //document.getElementById("idea_logo_div").innerHTML = "<img src=" + data.uri + ">";
+                        document.getElementById("logo").src = data.uri;
+                        document.getElementById("title_div").innerHTML = data.title;
+                        document.getElementById("description_div").innerHTML = data.description;
+                        $("#title_div").css("font-weight", "bold");
+                        $("#border_div").css("display", "block");
+                        $("#default_text_div").css("display", "none");
+                        $("#loading").css("display", "none");
+                        $("#error").css("display", "none");
+                });
+                request.error(function(xhr, exception) {
+                    console.log("error");
                     $("#loading").css("display", "none");
-                    });
-                    return false;
+                    $("#error").css("display", "block");
+                });
+                return false;
             });
         });
     </script>
