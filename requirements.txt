@@ -10,7 +10,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
 olefile==0.46
-Pillow==8.1.1
+Pillow==8.2.0
 pycparser==2.19
 pyOpenSSL==19.1.0
 PySocks==1.7.1
